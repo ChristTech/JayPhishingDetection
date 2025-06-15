@@ -49,13 +49,14 @@ def check_url():
             data = request.get_json(force=True)
             url = data.get("url")
 
-            
         if not url:
             return jsonify({"error": "No URL provided"}), 400
 
-
-        # Check whitelist before prediction
+        # Check whitelist first
         if whitelist.is_whitelisted(url):
+            print(f"\n------------------------")
+            print(f"URL {url} found in whitelist")
+            print("------------------------\n")
             return jsonify({
                 "url": url,
                 "prediction": "good",
@@ -63,8 +64,8 @@ def check_url():
                 "confidence": 100.0,
                 "whitelisted": True
             })
-        
-        # Get prediction and probability from model
+
+        # Continue with normal prediction if not whitelisted
         prediction = detect_phishing(url)  # Will be 'good' or 'bad'
         probabilities = model.predict_proba([url])[0]  # Get probability scores
         

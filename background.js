@@ -1,5 +1,7 @@
+const API_URL = "https://jayphishingdetection.onrender.com/api/check_url";
+
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  fetch("http://127.0.0.1:5000/api/check_url", {
+  fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ url: msg.url })
@@ -20,7 +22,7 @@ chrome.webNavigation.onBeforeNavigate.addListener(async function(details) {
     }
 
     try {
-        const response = await fetch("http://127.0.0.1:5000/api/check_url", {
+        const response = await fetch(API_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ url: details.url })

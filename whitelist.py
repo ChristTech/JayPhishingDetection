@@ -1,6 +1,7 @@
 import json
 import os
 from datetime import datetime, timedelta
+from urllib.parse import urlparse
 
 class Whitelist:
     def __init__(self):
@@ -26,17 +27,27 @@ class Whitelist:
             return True
         else:
             # Add to permanent whitelist
-            if url not in self.whitelist["safe_urls"]:
+            domain = self._get_domain(url)
+            if not any(domain == self._get_domain(white_url) 
+                      for white_url in self.whitelist["safe_urls"]):
                 self.whitelist["safe_urls"].append(url)
                 self.save_whitelist()
                 return True
         return False
 
+    def _get_domain(self, url):
+        """Extract main domain from URL"""
+        parsed = urlparse(url)
+        domain = parsed.netloc.lower()
+        return domain.replace('www.', '')
+
     def is_whitelisted(self, url):
-        # Check permanent whitelist
-        if url in self.whitelist["safe_urls"]:
-            return True
-            
+        domain = self._get_domain(url)
+        for white_url in self.whitelist["safe_urls"]:
+            white_domain = self._get_domain(white_url)
+            if domain == white_domain:
+                return True
+        
         # Check temporary whitelist
         if url in self.temp_whitelist:
             expiry_time = self.temp_whitelist[url]
