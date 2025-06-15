@@ -1,0 +1,161 @@
+# System Documentation and Maintenance for PhishGuard
+
+## 1. Program Documentation
+
+### A. Core Program Modules
+
+#### URL Detection Module (`new_test.py`)
+- Input:
+  * URL string from browser navigation
+  * Request parameters from API calls
+- Processing:
+  * URL feature extraction
+  * Machine learning model prediction
+  * Confidence score calculation
+- Output:
+  * Prediction result (good/bad)
+  * Confidence percentage
+  * Phishing status boolean
+
+#### Flask Server (`app.py`)
+- Input:
+  * HTTP GET/POST requests
+  * URL parameters
+  * JSON payloads
+- Processing:
+  * Request validation
+  * URL processing
+  * Model interaction
+  * Response formatting
+- Output:
+  * JSON response with prediction
+  * Error messages if applicable
+
+#### Extension Background (`background.js`)
+- Input:
+  * Browser navigation events
+  * URL changes
+  * User interactions
+- Processing:
+  * URL interception
+  * API communication
+  * Warning page routing
+  * Statistics tracking
+- Output:
+  * Navigation blocks
+  * Warning displays
+  * Statistics updates
+
+## 2. System Documentation
+
+### A. Technical Specifications
+
+#### System Architecture
+```
+Browser Extension <-> Flask Server <-> ML Model
+```
+
+#### Dependencies
+```json
+{
+  "server": {
+    "python": ">=3.8",
+    "flask": "2.0.1",
+    "scikit-learn": "0.24.2"
+  },
+  "extension": {
+    "chrome": ">=88",
+    "manifest_version": 3
+  }
+}
+```
+
+#### Data Flow
+1. URL Capture → Feature Extraction → Model Prediction → User Interface
+
+### B. System Objectives
+- Real-time phishing detection
+- High accuracy predictions
+- Minimal false positives
+- User-friendly warnings
+- Privacy preservation
+
+## 3. Operational Documentation
+
+### A. Server Deployment
+```bash
+# Start Flask Server
+cd PhishingDetectionExtension
+python app.py
+
+# Server Maintenance
+python -m flask run --reload  # Development
+gunicorn app:app  # Production
+```
+
+### B. Output Processing
+1. Real-time Logging
+```python
+print(f"URL checked: {url}")
+print(f"Prediction: [{prediction}]")
+print(f"Confidence: {confidence:.2f}%")
+```
+
+2. Statistics Collection
+```javascript
+chrome.storage.local.get(['urlsChecked', 'phishingBlocked'])
+```
+
+### C. Error Handling
+```python
+try:
+    # Process URL
+except Exception as e:
+    return jsonify({"error": str(e)}), 500
+```
+
+## 4. User Documentation
+
+### A. Installation Guide
+1. Download extension from Chrome Web Store
+2. Enable extension in Chrome settings
+3. Grant required permissions
+
+### B. Usage Instructions
+1. Normal Browsing
+   - Extension runs automatically
+   - No user action required
+
+2. Warning Encounters
+   - Red warning page appears
+   - Options:
+     * Return to safety
+     * Proceed (at risk)
+
+3. Viewing Statistics
+   - Click extension icon
+   - View URLs checked
+   - View threats blocked
+
+### C. Troubleshooting
+1. Common Issues
+   - Server connection errors
+   - False positives
+   - Performance issues
+
+2. Solutions
+   - Check server status
+   - Update extension
+   - Clear browser cache
+
+### D. Maintenance Schedule
+- Weekly model updates
+- Daily log rotation
+- Monthly performance review
+
+This documentation ensures:
+- Clear understanding of system components
+- Proper maintenance procedures
+- Efficient user operation
+- Quick troubleshooting
+- Consistent performance

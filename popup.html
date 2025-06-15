@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jays PhishGuard</title>
+    <style>
+        body {
+            width: 300px;
+            padding: 15px;
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        .stats {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">Jays PhishGuard</div>
+    <div class="status">
+        Active and protecting
+    </div>
+    <div class="stats">
+        <p>URLs checked: <span id="urlsChecked">0</span></p>
+        <p>Phishing attempts blocked: <span id="phishingBlocked">0</span></p>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>

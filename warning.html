@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phishing Alert</title>
+    <link rel="stylesheet" href="styles/warning.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="warning-container">
+        <div class="warning-header">
+            <div class="warning-icon"></div>
+            <h1>Phishing Alert</h1>
+        </div>
+        
+        <div class="warning-content">
+            <div class="warning-message">
+                <h2>This site looks suspicious!</h2>
+                <p>You are trying to visit:</p>
+                <div class="url-box">
+                    <p id="detectedUrl"></p>
+                </div>
+            </div>
+
+            <div class="confidence-meter">
+                <div class="meter-label">Risk Level</div>
+                <div class="meter">
+                    <div id="confidenceBar" class="meter-bar"></div>
+                </div>
+                <div class="confidence-text">
+                    Confidence: <span id="confidence"></span>%
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button id="backButton" class="safe-button">
+                    <span class="button-icon"></span>
+                    Return to Safety
+                </button>
+                <button id="whitelistButton" class="whitelist-button">
+                    <span class="button-icon"></span>
+                    Mark as Safe
+                </button>
+                <button id="proceedButton" class="danger-button">
+                    <span class="button-icon"></span>
+                    Proceed Anyway
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/warning.js"></script>
+</body>
+</html>
