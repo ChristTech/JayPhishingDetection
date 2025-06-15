@@ -10,6 +10,7 @@ import json
 import os
 from detect import detect_phishing
 from whitelist import Whitelist
+import nltk
 
 class NumpyEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -30,6 +31,14 @@ model_path = os.path.join(os.path.dirname(__file__), 'phishing.pkl')
 model = pickle.load(open(model_path, 'rb'))
 
 whitelist = Whitelist()
+
+# Download necessary NLTK data files
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
+    nltk.download('stopwords')
+    nltk.download('wordnet')
 
 @app.route("/api/check_url", methods=["POST", "GET"])
 def check_url():
