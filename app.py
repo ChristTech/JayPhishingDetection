@@ -65,26 +65,27 @@ def check_url():
                 "whitelisted": True
             })
 
-        # Continue with normal prediction if not whitelisted
-        prediction = detect_phishing(url)  # Will be 'good' or 'bad'
-        probabilities = model.predict_proba([url])[0]  # Get probability scores
+        # Get prediction and probabilities
+        prediction = model.predict([url])[0]
+        probabilities = model.predict_proba([url])[0]
         
-        # Calculate confidence based on actual probabilities
-        confidence = float(probabilities[1] * 100 if prediction == 'bad' else probabilities[0] * 100)
+        # Calculate confidence based on prediction
+        confidence = float(probabilities[1] * 100) if prediction == 'bad' else float(probabilities[0] * 100)
         
-        # Format response
         response = {
             "url": url,
             "prediction": prediction,
             "is_phishing": prediction == 'bad',
-            "confidence": confidence
+            "confidence": round(confidence, 2),  # Round to 2 decimal places
+            "whitelisted": False
         }
         
-        # Log results with actual confidence
+        # Enhanced logging
         print(f"\n------------------------")
         print(f"URL checked: {url}")
         print(f"Prediction: [{prediction}]")
         print(f"Confidence: {confidence:.2f}%")
+        print(f"Probabilities - Safe: {probabilities[0]:.2%}, Phishing: {probabilities[1]:.2%}")
         print(f"Is Phishing: {response['is_phishing']}")
         print("------------------------\n")
         
